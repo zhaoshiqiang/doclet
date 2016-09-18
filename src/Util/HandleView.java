@@ -5,7 +5,6 @@ import freemarker.template.Template;
 import tag.ClassType;
 import tag.MethodType;
 import tag.PackageType;
-import tag.TemlateType;
 
 import java.io.*;
 import java.util.HashMap;
@@ -16,14 +15,12 @@ import java.util.Map;
  */
 public class HandleView {
 
-    private static Map<String,Template> packageTemplate = new HashMap<String,Template>();
-    private static Map<String,Template> classTemplate = new HashMap<String,Template>();
-    private static Map<String,Template> methodTemplate = new HashMap<String,Template>();
+    private static Map<String,Template> template = new HashMap<String,Template>();
 
     public static void init() throws Exception {
-        //创建configuration对象
+        //鍒涘缓configuration瀵硅薄
         Configuration cfg = new Configuration();
-        //设置编码方式
+        //璁剧疆缂栫爜鏂瑰紡
         cfg.setDefaultEncoding("UTF-8");
 
         Map<String,String> packagemap = PackageType.getTemplate();
@@ -33,7 +30,7 @@ public class HandleView {
             cfg.setDirectoryForTemplateLoading(file);
             Template template = cfg.getTemplate(filepath.substring(filepath.lastIndexOf("/")+1));
 //            System.out.println(template.getRootTreeNode());
-            packageTemplate.put(key,template);
+            HandleView.template.put(key, template);
         }
 
         Map<String,String> classmap = ClassType.getTemplate();
@@ -43,7 +40,7 @@ public class HandleView {
             cfg.setDirectoryForTemplateLoading(file);
             Template template = cfg.getTemplate(filepath.substring(filepath.lastIndexOf("/") + 1));
 //            System.out.println(template.getRootTreeNode());
-            classTemplate.put(key,template);
+            HandleView.template.put(key, template);
         }
 
         Map<String,String> methodmap = MethodType.getTemplate();
@@ -53,29 +50,24 @@ public class HandleView {
             cfg.setDirectoryForTemplateLoading(file);
             Template template = cfg.getTemplate(filepath.substring(filepath.lastIndexOf("/") + 1));
 //            System.out.println(template.getRootTreeNode());
-            methodTemplate.put(key, template);
+            HandleView.template.put(key, template);
         }
     }
 
-    public static void createfile(Map data,Map<String,String> outpath, TemlateType temlateType) throws Exception {
+    public static void createfile(Map data, Map<String, String> outpath) throws Exception {
 
         Map<String,Template> map = null;
-        switch (temlateType){
-            case PACKAGETYPE : map=packageTemplate; break;
-            case METHODTYPE : map=methodTemplate; break;
-            case CLASSTYPE : map=classTemplate; break;
-        }
 
         for (String key : outpath.keySet()){
             File file = new File(PackageType.getBasepath()+outpath.get(key));
 //            System.out.println(file.getPath());
             if (!file.getParentFile().exists()){
-                //如果目录不存在则创建目录
+                //濡傛灉鐩綍涓嶅瓨鍦ㄥ垯鍒涘缓鐩綍
                 file.getParentFile().mkdirs();
             }
 //            System.out.println(file.getPath());
             BufferedWriter write = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
-            map.get(key).process(data, write);
+            template.get(key).process(data, write);
             write.flush();
             write.close();
         }

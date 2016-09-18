@@ -28,7 +28,7 @@ public class doclet3 {
             //为包生成对应的文档
             try {
 
-                HandleView.createfile(packageType.transformTagvalue(),PackageType.getOutpath(),TemlateType.PACKAGETYPE);
+                HandleView.createfile(packageType.transformTagvalue(),PackageType.getOutpath());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -104,7 +104,7 @@ public class doclet3 {
                     outpath.setValue(docMethodList(methodDoc,outpath.getKey()).get(0));
                 }
                 //为每个方法生成对应的文件
-                HandleView.createfile(methodType.transformTagvalue(),methodType.getOutpath(),TemlateType.METHODTYPE);
+                HandleView.createfile(methodType.transformTagvalue(),methodType.getOutpath());
             }
             //设置每个类的输出路径
             for (Map.Entry<String,String> outpath : classType.getOutpath().entrySet()){
@@ -112,7 +112,7 @@ public class doclet3 {
                 outpath.setValue(docClassList(classDoc, outpath.getKey()).get(0));
             }
             //为每个类生成对应的文件
-            HandleView.createfile(classType.transformTagvalue(),classType.getOutpath(),TemlateType.CLASSTYPE);
+            HandleView.createfile(classType.transformTagvalue(),classType.getOutpath());
         }
 
     }
