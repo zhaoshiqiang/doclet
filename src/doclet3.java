@@ -24,10 +24,7 @@ public class doclet3 {
 
         PackageType packageType = TypeFactory.getPackageType();
         try {
-            doc(root.classes(),packageType);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
+            doc(root.classes(), packageType);
             //为包生成对应的文档
             try {
 
@@ -35,7 +32,11 @@ public class doclet3 {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
         return true;
     }
 
@@ -99,7 +100,7 @@ public class doclet3 {
                 }
                 //设置每个方法的输出路径
                 for (Map.Entry<String,String> outpath : methodType.getOutpath().entrySet()){
-                    System.out.println(outpath.getKey() + "---->" + docMethodList(methodDoc,outpath.getKey()).get(0));
+//                    System.out.println(outpath.getKey() + "---->" + docMethodList(methodDoc,outpath.getKey()).get(0));
                     outpath.setValue(docMethodList(methodDoc,outpath.getKey()).get(0));
                 }
                 //为每个方法生成对应的文件

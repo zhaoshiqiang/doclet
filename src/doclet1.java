@@ -53,7 +53,7 @@ public class doclet1 {
     private static String METHODITEM="<tr><td><a href=\"CLASS_URI/METHOD_URI.html\">CLASS_URI/METHOD_URI</a></td>"+
             "<td>METHOD_PATH</td></tr>";
 
-    private static String DIRPATH="D:/api/";
+    private static String DIRPATH="D:/api2/";
 
     private static String SRCNAME = "com.bluemobi.bluecollar.network";
     private static String MAPOPERATION ="map.put(\"PARAM\", PARAM);";

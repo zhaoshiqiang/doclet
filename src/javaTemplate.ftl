@@ -1,37 +1,36 @@
-package com.bluemobi.bluecollar.network.request;
+package ${basepath}.request;
 import java.util.HashMap;
 import java.util.Map;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
-import com.bluemobi.bluecollar.network.LlptHttpJsonRequest;
-import com.bluemobi.bluecollar.network.response.getTagListResponse;
+import ${basepath}.LlptHttpJsonRequest;
+import ${basepath}.response.getTagListResponse;
 
-public class <#list methodname as a>${a}</#list>Request extends LlptHttpJsonRequest<<#list methodname as a>${a}</#list>Response> {
-	private static final String APIPATH = "<#list uri as a>${a}</#list>";
+public class ${methodname}Request extends LlptHttpJsonRequest<${methodname}Response> {
+    private static final String APIPATH = "${uri}";
 
-	<#list param as a>
+<#list paramlist as param>
+    private String ${param.name};
+    public String get${param.name?cap_first}() {return ${param.name};}
+    public void set${param.name?cap_first}(String ${param.name}) {this.${param.name} = ${param.name};}
 
-		private String ${a.name};
-		public String get${a.name?cap_first}() {return ${a.name};}
-		public void set${a.name?cap_first}(String ${a.name}) {this.${a.name} = ${a.name};}
-		
-	</#list>
+</#list>
 
-	public <#list methodname as a>${a}</#list>Request(Listener<<#list methodname as a>${a}</#list>Response> listener, ErrorListener errorListener) {
-			super(Method.POST, APIPATH, listener, errorListener);
-		}
-	public <#list methodname as a>${a}</#list>Request(int method, String partUrl, Listener<<#list methodname as a>${a}</#list>Response> listener, ErrorListener errorListener) {
-			super(method, partUrl, listener, errorListener);
-		}
-	public Class<<#list methodname as a>${a}</#list>Response> getResponseClass() {return <#list methodname as a>${a}</#list>Response.class;}
+    public ${methodname}Request(Listener<${methodname}Response> listener, ErrorListener errorListener) {
+        super(Method.POST, APIPATH, listener, errorListener);
+        }
+        public ${methodname}Request(int method, String partUrl, Listener<${methodname}Response> listener, ErrorListener errorListener) {
+            super(method, partUrl, listener, errorListener);
+            }
+            public Class<${methodname}Response> getResponseClass() {return ${methodname}Response.class;}
 
-	public String GetApiPath() {return APIPATH;}
+                public String GetApiPath() {return APIPATH;}
 
-	public Map<String, String> GetParameters() {
-			Map<String, String> map = new HashMap<String, String>();
-		<#list param as a>
-			map.put("${a.name}",${a.name});
-		</#list>
-			return map;
-		}
-}
+                public Map<String, String> GetParameters() {
+                Map<String, String> map = new HashMap<String, String>();
+			<#list paramlist as param>
+                map.put("${param.name}",${param.name});
+			</#list>
+                return map;
+                }
+                }

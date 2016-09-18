@@ -18,6 +18,7 @@ public class index {
         Configuration cfg = new Configuration();
         //指定模板路径
         File file = new File("");
+
         //为什么这里的路径不是D:\ProgramZhaoShiqiang\JavaWeb\DocletTest\src而是D:\ProgramZhaoShiqiang\JavaWeb\DocletTest
 //        System.out.println(file.getAbsolutePath());
         //设置要解析的模板所在的目录，并加载模板文件
@@ -25,7 +26,7 @@ public class index {
         //设置编码方式
         cfg.setDefaultEncoding("UTF-8");
         Template indexTemplate = cfg.getTemplate("src/index.ftl");
-        System.out.print(indexTemplate.getRootTreeNode());
+//        System.out.print(indexTemplate.getRootTreeNode());
 
         Map indexRoot = new HashMap();
         List<Map> divlist = new ArrayList<>();
