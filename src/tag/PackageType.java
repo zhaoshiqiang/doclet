@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by zhaoshiqiang on 2016/9/10.
  */
 public class PackageType {
-    List<ClassType> classTypes;
+    private List<ClassType> classTypes;
     private static Map<String,String> template;
     private static Map<String,String> outpath;
     private static String basepath;

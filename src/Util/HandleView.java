@@ -2,9 +2,6 @@ package Util;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import tag.ClassType;
-import tag.MethodType;
-import tag.PackageType;
 
 import java.io.*;
 import java.util.HashMap;
@@ -23,7 +20,7 @@ public class HandleView {
         //设置编码方式
         cfg.setDefaultEncoding("UTF-8");
 
-        Map<String,String> packagemap = PackageType.getTemplate();
+        Map<String,String> packagemap = TypeFactory.getPACKAGETYPE().getTemplate();
         for (String key : packagemap.keySet()){
             String filepath = packagemap.get(key);
             File file = new File(filepath.substring(0,filepath.lastIndexOf("/")));
@@ -33,7 +30,7 @@ public class HandleView {
             HandleView.template.put(key, template);
         }
 
-        Map<String,String> classmap = ClassType.getTemplate();
+        Map<String,String> classmap = TypeFactory.getCLASSTYPE().getTemplate();
         for (String key : classmap.keySet()){
             String filepath = classmap.get(key);
             File file = new File(filepath.substring(0,filepath.lastIndexOf("/")));
@@ -43,7 +40,7 @@ public class HandleView {
             HandleView.template.put(key, template);
         }
 
-        Map<String,String> methodmap = MethodType.getTemplate();
+        Map<String,String> methodmap = TypeFactory.getMETHODTYPE().getTemplate();
         for (String key : methodmap.keySet()){
             String filepath = methodmap.get(key);
             File file = new File(filepath.substring(0,filepath.lastIndexOf("/")));
@@ -56,10 +53,8 @@ public class HandleView {
 
     public static void createfile(Map data, Map<String, String> outpath) throws Exception {
 
-        Map<String,Template> map = null;
-
         for (String key : outpath.keySet()){
-            File file = new File(PackageType.getBasepath()+outpath.get(key));
+            File file = new File(TypeFactory.getPACKAGETYPE().getBasepath()+outpath.get(key));
 //            System.out.println(file.getPath());
             if (!file.getParentFile().exists()){
                 //如果目录不存在则创建目录
