@@ -22,21 +22,12 @@ public class doclet3 {
             e.printStackTrace();
         }
 
-        PackageType packageType = TypeFactory.getPackageType();
         try {
-            doc(root.classes(), packageType);
-            //Îª°üÉú³É¶ÔÓ¦µÄÎÄµµ
-            try {
-
-                HandleView.createfile(packageType.transformTagvalue(),PackageType.getOutpath());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            PackageType packageType = doc(root.classes());
+            createFile(packageType);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         return true;
     }
 
@@ -65,26 +56,30 @@ public class doclet3 {
      * @mytag doc mytag
      * @param classDocs
      */
-    private static void doc(ClassDoc[] classDocs,PackageType packageType) throws Exception {
+    private static PackageType doc(ClassDoc[] classDocs) throws Exception {
+
+        PackageType packageType = TypeFactory.getPackageType();
 
         List<ClassType> classTypeList = new ArrayList<ClassType>();
         packageType.setClassTypes(classTypeList);
-        //´¦Àí¸÷¸öÀà
+        //å¤„ç†å„ä¸ªç±»
         for (int i = 0; i < classDocs.length; i++) {
 
             ClassType classType = TypeFactory.getClassType();
             classTypeList.add(classType);
 
-            //´¦ÀíÀà×¢½â
+            //å¤„ç†ç±»æ³¨è§£
             ClassDoc classDoc = classDocs[i];
             List<tag.Tag> classtags = classType.getTagList();
             for (tag.Tag classtag : classtags){
                 classtag.setItemvalues(docClassList(classDoc,classtag.getName()));
             }
+            //è®¾ç½®æ¯ä¸ªç±»çš„è¾“å‡ºè·¯å¾„
             for (Map.Entry<String,String> outpath : classType.getOutpath().entrySet()){
                 outpath.setValue(docClassList(classDoc,outpath.getKey()).get(0));
             }
-            //´¦ÀíÀàÖĞ¸÷¸ö·½·¨µÄ×¢½â
+
+            //å¤„ç†ç±»ä¸­å„ä¸ªæ–¹æ³•çš„æ³¨è§£
             List<MethodType> methodTypeList = new ArrayList<MethodType>();
             classType.setMethodTypeList(methodTypeList);
             MethodDoc[] methodDocs = classDoc.methods();
@@ -92,29 +87,24 @@ public class doclet3 {
                 MethodType methodType = TypeFactory.getMethodType();
                 methodTypeList.add(methodType);
 
-                //´¦Àí·½·¨×¢½â
+                //å¤„ç†æ–¹æ³•æ³¨è§£
                 MethodDoc methodDoc = methodDocs[j];
                 List<tag.Tag> methodtags = methodType.getTagList();
                 for (tag.Tag methodtag : methodtags){
                     methodtag.setItemvalues(docMethodList(methodDoc,methodtag.getName()));
                 }
-                //ÉèÖÃÃ¿¸ö·½·¨µÄÊä³öÂ·¾¶
+                //è®¾ç½®æ¯ä¸ªæ–¹æ³•çš„è¾“å‡ºè·¯å¾„
                 for (Map.Entry<String,String> outpath : methodType.getOutpath().entrySet()){
-//                    System.out.println(outpath.getKey() + "---->" + docMethodList(methodDoc,outpath.getKey()).get(0));
                     outpath.setValue(docMethodList(methodDoc,outpath.getKey()).get(0));
                 }
-                //ÎªÃ¿¸ö·½·¨Éú³É¶ÔÓ¦µÄÎÄ¼ş
-                HandleView.createfile(methodType.transformTagvalue(),methodType.getOutpath());
+
             }
-            //ÉèÖÃÃ¿¸öÀàµÄÊä³öÂ·¾¶
+            //è®¾ç½®æ¯ä¸ªç±»çš„è¾“å‡ºè·¯å¾„
             for (Map.Entry<String,String> outpath : classType.getOutpath().entrySet()){
-                System.out.println(outpath.getKey() + "---->" + docClassList(classDoc, outpath.getKey()).get(0));
                 outpath.setValue(docClassList(classDoc, outpath.getKey()).get(0));
             }
-            //ÎªÃ¿¸öÀàÉú³É¶ÔÓ¦µÄÎÄ¼ş
-            HandleView.createfile(classType.transformTagvalue(),classType.getOutpath());
         }
-
+        return packageType;
     }
 
     public static int optionLength(String option) {
@@ -145,4 +135,27 @@ public class doclet3 {
         return (ConfigurationImpl.getInstance()).validOptions(options, reporter);
     }
 
+    public static void createFile(PackageType packageType){
+
+        try {
+            //ä¸ºåŒ…ç”Ÿæˆå¯¹åº”çš„æ–‡æ¡£
+            HandleView.createfile(packageType.transformTagvalue(),PackageType.getOutpath());
+
+            //ä¸ºç±»ç”Ÿæˆå¯¹åº”çš„æ–‡æ¡£
+            List<ClassType> classTypes = packageType.getClassTypes();
+            for (ClassType classType : classTypes){
+                //ç”Ÿæˆç±»å¯¹åº”çš„æ–‡æ¡£
+                HandleView.createfile(classType.transformTagvalue(),classType.getOutpath());
+
+                //ä¸ºæ–¹æ³•å±‚æ¬¡å¯¹åº”çš„æ–‡æ¡£
+                List<MethodType> methodTypeList = classType.getMethodTypeList();
+                for (MethodType methodType : methodTypeList){
+                    //ç”Ÿæˆæ–¹æ³•å¯¹åº”çš„æ–‡æ¡£
+                    HandleView.createfile(methodType.transformTagvalue(),methodType.getOutpath());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
