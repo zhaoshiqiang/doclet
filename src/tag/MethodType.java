@@ -17,7 +17,6 @@ public class MethodType implements Serializable{
     * */
     private static final long serialVersionUID = 7991552226614088458L;
     private List<Tag> tagList;
-    private List<Tag> classList;
     private static Map<String,String> template;
     private Map<String,String> outpath;
 
@@ -27,14 +26,6 @@ public class MethodType implements Serializable{
 
     public void setTagList(List<Tag> tagList) {
         this.tagList = tagList;
-    }
-
-    public List<Tag> getClassList() {
-        return classList;
-    }
-
-    public void setClassList(List<Tag> classList) {
-        this.classList = classList;
     }
 
     public static Map<String, String> getTemplate() {
@@ -55,15 +46,10 @@ public class MethodType implements Serializable{
 
 
     public Map<String,List> transformTagvalue(){
-        Map<String,List> map = new HashMap<String,List>();
+        Map<String,List> map = new HashMap<>();
         for (Tag tag : tagList){
             map.put(tag.getName(),tag.transformTagvalue());
 //            System.out.println(tag.getName()+"---->"+tag.transformTagvalue());
-        }
-
-        for (Tag tag : classList){
-            map.put("class_" + tag.getName(), tag.transformTagvalue());
-//            System.out.println(tag.getName() + "---->" + tag.transformTagvalue());
         }
         return map;
     }
