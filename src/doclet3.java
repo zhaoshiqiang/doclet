@@ -71,6 +71,7 @@ public class doclet3 {
             //处理类注解
             ClassDoc classDoc = classDocs[i];
             List<tag.Tag> classtags = classType.getTagList();
+            TypeFactory.getMETHODTYPE().setClassList(classtags);
             for (tag.Tag classtag : classtags){
                 classtag.setItemvalues(docClassList(classDoc,classtag.getName()));
             }
