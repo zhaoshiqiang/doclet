@@ -75,7 +75,7 @@
 </h2>
 <p>
         <span style="font-weight:600">
-            <a rel="nofollow" class="external free" href="">${uri}</a>
+            <a rel="nofollow" class="external free" href="">test.manager.jchvip.net/${uri}</a>
         </span>
 </p>
 <h2 class="wiki_title">

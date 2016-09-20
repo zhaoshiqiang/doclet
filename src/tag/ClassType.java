@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public class ClassType implements Serializable{
     private static final long serialVersionUID = -8834559347461591191L;
+
     private static Map<String,String> template;
     private List<MethodType> methodTypeList;
     private List<Tag> tagList;

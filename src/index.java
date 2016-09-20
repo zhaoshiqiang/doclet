@@ -18,7 +18,6 @@ public class index {
         Configuration cfg = new Configuration();
         //指定模板路径
         File file = new File("");
-
         //为什么这里的路径不是D:\ProgramZhaoShiqiang\JavaWeb\DocletTest\src而是D:\ProgramZhaoShiqiang\JavaWeb\DocletTest
 //        System.out.println(file.getAbsolutePath());
         //设置要解析的模板所在的目录，并加载模板文件
