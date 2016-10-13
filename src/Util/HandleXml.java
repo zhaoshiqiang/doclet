@@ -17,6 +17,9 @@ import java.util.Map;
  */
 public class HandleXml {
 
+    private HandleXml() {
+    }
+
     public static void handlexml(String xmlAddress) throws DocumentException {
         SAXReader saxReader = new SAXReader();
         Document document = saxReader.read(new File(xmlAddress));

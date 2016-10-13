@@ -17,6 +17,9 @@ public class TypeFactory {
     private static ClassType CLASSTYPE = new ClassType();
     private static MethodType METHODTYPE = new MethodType();
     private static PackageType PACKAGETYPE = new PackageType();
+    //通过私有构造器强化不可实例化的能力
+    private TypeFactory() {
+    }
 
     public static ClassType getCLASSTYPE() {
         return CLASSTYPE;

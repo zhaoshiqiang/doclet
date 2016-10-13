@@ -12,6 +12,9 @@ import java.util.Map;
  */
 public class HandleView {
 
+    private HandleView() {
+    }
+
     private static Map<String,Template> template = new HashMap<String,Template>();
 
     public static void init() throws Exception {
